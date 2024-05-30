@@ -4,18 +4,25 @@ import { useWallet } from "@suiet/wallet-kit";
 import { useEffect, useState, useCallback } from "react";
 import GalleryObject from "../layout/gallery-object";
 import { FixedSizeList as List } from 'react-window';
-
+import { useDrag } from 'react-dnd';
 
 const Row = ({ index, style, data }: { index: number, style: any, data: any[] }) => {
+    const [{ isDragging }, drag] = useDrag(() => ({
+        type: 'object',
+        item: { id: index },
+        collect: (monitor) => ({
+            isDragging: monitor.isDragging(),
+        }),
+    }));
     const object = data[index].data;
     return (
-        <div style={style}>
+        <div ref={drag} style={{ opacity: isDragging ? 0.5 : 1, ...style }}>
             <GalleryObject
                 id={object.objectId}
                 type={object.type}
                 name={object.display.data?.name || object.type}
                 image_url={object.display.data?.image_url}
-                // fields={object.content.fields}
+            // fields={object.content.fields}
             />
         </div>
     );
