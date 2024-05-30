@@ -49,7 +49,7 @@ export default function RootLayout({
         >
           <Providers>
             <Navbar />
-            <main className="flex-1" >
+            <main>
               {children}
             </main>
             <Foot />
