@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Image from 'next/image';
 
 type GalleryObjectProps = {
     name: string,
@@ -22,16 +22,16 @@ export default function GalleryObject({ name, type, id, image_url }: GalleryObje
 
     return (
         <div className="flex flex-col items-center">
-            <img
-                alt="Wrapper Protocol"
+            <Image
+                alt={validId}
                 className="mb-2"
-                height="100"
+                height={100}
                 src={svgUrl}
                 style={{
                     aspectRatio: "100/100",
                     objectFit: "cover",
                 }}
-                width="100"
+                width={100}
             />
         </div>
     );

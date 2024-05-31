@@ -9,13 +9,14 @@ import { useDrag } from 'react-dnd';
 const Row = ({ index, style, data }: { index: number, style: any, data: any[] }) => {
     const [{ isDragging }, drag] = useDrag(() => ({
         type: 'object',
-        item: { id: index },
+        item: { id: data[index].data.objectId, type: 'object' },
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
         }),
     }));
     const object = data[index].data;
     return (
+        // @ts-ignore
         <div ref={drag} style={{ opacity: isDragging ? 0.5 : 1, ...style }}>
             <GalleryObject
                 id={object.objectId}
@@ -52,13 +53,13 @@ export default function OwnedObjects() {
         // @ts-ignore
         setCursor(nextCursor);
         setLoading(false);
-    }, [wallet.connected, cursor, loading]);
+    }, [wallet.connected, cursor, loading, wallet.account?.address]);
 
     useEffect(() => {
         if (wallet.connected && ownedObjects.length === 0) {
             loadMoreItems();
         }
-    }, [wallet.connected, loadMoreItems]);
+    }, [wallet.connected, loadMoreItems, ownedObjects.length]);
 
     return (
         <List

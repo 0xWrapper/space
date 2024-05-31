@@ -7,7 +7,7 @@ const cache = new NodeCache({ stdTTL: 3600, checkperiod: 120 });
 export async function fetchImageAsBase64(image_url: string) {
   const cachedImage = cache.get(image_url);
   if (cachedImage) {
-    return cachedImage;
+    return cachedImage as string;
   }
 
   let imageBase64 = "";

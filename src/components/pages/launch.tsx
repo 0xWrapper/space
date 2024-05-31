@@ -1,6 +1,7 @@
 import { LaunchBar } from "@/components/element/category-bar"
 import { Progress } from "@/components/ui/progress"
 import Link from "next/link"
+import Image from "next/image"
 
 export default function Page() {
     return (
@@ -16,7 +17,7 @@ export default function Page() {
                 <div className="col-span-2">
                     <h2 className="text-2xl font-bold text-gray-900 mb-4">Event Details</h2>
                     <p className="text-gray-700 mb-6">
-                        Celebrate Children's Day by participating in our special NFT minting event. Mint your unique NFTs and
+                        Celebrate Children Day by participating in our special NFT minting event. Mint your unique NFTs and
                         contribute to the token pool for a chance to earn token drops!
                     </p>
                     <div className="space-y-4">
@@ -35,7 +36,7 @@ export default function Page() {
                     </div>
                 </div>
                 <div>
-                    <img
+                    <Image
                         alt="NFT Display"
                         className="rounded-lg"
                         height="300"

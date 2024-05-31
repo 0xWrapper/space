@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 
 export default function Component() {
     return (
@@ -27,7 +28,7 @@ export default function Component() {
                                 </SelectTrigger>
                                 <SelectContent>
                                     <div className="flex flex-col items-center gap-2 p-4 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                                        <img
+                                        <Image
                                             alt="Wrapper Thumbnail"
                                             className="rounded-lg"
                                             height="100"
@@ -50,7 +51,7 @@ export default function Component() {
                                         <SelectItem value="wrapper1">Select</SelectItem>
                                     </div>
                                     <div className="flex flex-col items-center gap-2 p-4 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                                        <img
+                                        <Image
                                             alt="Wrapper Thumbnail"
                                             className="rounded-lg"
                                             height="100"
@@ -74,7 +75,7 @@ export default function Component() {
                                     </div>
 
                                     <div className="flex flex-col items-center gap-2 p-4 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                                        <img
+                                        <Image
                                             alt="Wrapper Thumbnail"
                                             className="rounded-lg"
                                             height="100"
@@ -98,7 +99,7 @@ export default function Component() {
                                     </div>
 
                                     <div className="flex flex-col items-center gap-2 p-4 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                                        <img
+                                        <Image
                                             alt="Wrapper Thumbnail"
                                             className="rounded-lg"
                                             height="100"
@@ -177,7 +178,7 @@ export default function Component() {
                                     <div className="grid gap-4">
                                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                             <div className="flex flex-col items-center gap-2 p-4 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                                                <img
+                                                <Image
                                                     alt="NFT Thumbnail"
                                                     className="rounded-lg"
                                                     height="100"
@@ -195,7 +196,7 @@ export default function Component() {
                                                 <Button size="sm">Lock</Button>
                                             </div>
                                             <div className="flex flex-col items-center gap-2 p-4 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                                                <img
+                                                <Image
                                                     alt="NFT Thumbnail"
                                                     className="rounded-lg"
                                                     height="100"
@@ -219,7 +220,7 @@ export default function Component() {
                                     <div className="grid gap-4">
                                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                             <div className="flex flex-col items-center gap-2 p-4 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                                                <img
+                                                <Image
                                                     alt="Locked NFT Thumbnail"
                                                     className="rounded-lg"
                                                     height="100"
@@ -237,7 +238,7 @@ export default function Component() {
                                                 <Button size="sm">Unlock</Button>
                                             </div>
                                             <div className="flex flex-col items-center gap-2 p-4 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                                                <img
+                                                <Image
                                                     alt="Locked NFT Thumbnail"
                                                     className="rounded-lg"
                                                     height="100"

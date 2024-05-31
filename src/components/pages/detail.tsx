@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { AvatarImage, Avatar } from "@/components/ui/avatar"
 import { CardContent, Card } from "@/components/ui/card"
+import Image from "next/image"
 
 export default function Page() {
   return (
@@ -82,7 +83,7 @@ export default function Page() {
         <section className="flex justify-center items-center w-full md:w-1/2">
           <Card className="w-[350px] mr-4">
             <CardContent className="flex justify-center p-0">
-              <img
+              <Image
                 alt="SuiFren NFT"
                 height="350"
                 src="/placeholder.svg"
