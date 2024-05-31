@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { LogoIcon, TwitterIcon } from "@/components/layout/logo";
+import { GithubIcon, LogoIcon, TwitterIcon } from "@/components/layout/logo";
 import { SVGProps } from "react";
 import { siteConfig } from "@/config/site";
 import Link from "next/link";
@@ -9,6 +9,15 @@ export function TwitterLink(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElem
         <Button asChild variant="ghost" size="icon">
             <a className="text-gray-600" href={siteConfig.links.twitter}>
                 <TwitterIcon className="h-4 w-4" />
+            </a>
+        </Button>
+    )
+}
+export function GithubLink(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+    return (
+        <Button asChild variant="ghost" size="icon">
+            <a className="text-gray-600" href={siteConfig.links.github}>
+                <GithubIcon className="h-4 w-4" />
             </a>
         </Button>
     )

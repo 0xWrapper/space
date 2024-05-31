@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
-import { TwitterLink, SiteLogoLink } from "@/components/layout/site-links"
+import { TwitterLink, SiteLogoLink, GithubLink } from "@/components/layout/site-links"
 import { MenuIcon } from "@/components/layout/logo"
 import WalletDialog from "./wallet-diago";
 
@@ -59,6 +59,7 @@ export default function Navbar() {
           <NavLink href="/detail">Detail</NavLink>
           <NavLink href="/tokenized">Tokenized</NavLink>
           <TwitterLink />
+          <GithubLink />
           {/* <ModeToggle /> */}
         </nav>
         <div className="flex items-center gap-2">
