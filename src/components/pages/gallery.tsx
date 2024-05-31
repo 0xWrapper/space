@@ -8,60 +8,93 @@ import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { useWallet } from "@suiet/wallet-kit";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { getOwnedObjects } from "@/lib/apis";
-import { VariableSizeGrid as Grid } from 'react-window';
+import { getAllOwnedObjects, getOwnedObjects } from "@/lib/apis";
 
 import { PACKAGE_ID } from "@/config/network";
-import { Cell } from "../element/owner-wrapper";
+import { WrapperCell, WrapperGrid, WrapperList } from "../element/owner-wrapper";
+import { Key } from "lucide-react";
 
 export default function Page() {
     const wallet = useWallet();
 
+    const [shouldRefresh, setShouldRefresh] = useState(false); // 控制刷新
+    useEffect(() => {
+        setInterval(() => {
+            console.log("refresh");
+            setShouldRefresh((prev: boolean) => !prev); // 切换布尔变量
+        }, 5000);
+    }, []);
+
+
     // wrapper 数据获取
     const [ownedWrappers, setOwnedWrappers] = useState([]);
-    const [cursor, setCursor] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [cursor, setCursor] = useState(null);
 
+    // 使用useCallback可以进行动态渲染
+    // 使用useEffect来一次请求完毕
     const loadMoreItems = useCallback(async () => {
         if (!wallet.connected || loading) return;
+        console.log("load more items");
         setLoading(true);
         const { result, nextCursor, hasNextPage } = await getOwnedObjects({
             owner: wallet.account?.address as string,
-            limit: 12,
+            limit: 20,
             cursor,
             structType: `${PACKAGE_ID}::wrapper::Wrapper`,
             matchType: 'MatchAll',
             showDisplay: true,
         });
-        // @ts-ignore
-        setOwnedWrappers(prev => [...prev, ...result]);
+        if (result.length !== 0) {
+            // @ts-ignore
+            setOwnedWrappers(prev => [...prev, ...result]);
+        }
         // @ts-ignore
         setCursor(nextCursor);
         setLoading(false);
     }, [wallet.connected, cursor, loading, wallet.account?.address]);
 
+    const [kind, setKind] = useState("");
+    const [alias, setAlias] = useState("");
+    const [filteredWrappers, setFilteredWrappers] = useState([]);
+    const [kindSet, setKindSet] = useState(new Set());
+
     useEffect(() => {
-        if (wallet.connected && ownedWrappers.length === 0) {
+        console.log("to render wrapper and select kind");
+        let kinds = new Set();
+        ownedWrappers.forEach((wrapper: any) => {
+            if (wrapper.data.display.data?.kind) kinds.add(wrapper.data.display.data?.kind);
+        });
+        setKindSet(kinds);
+        setFilteredWrappers(ownedWrappers);
+    }, [ownedWrappers]);
+
+    useEffect(() => {
+        if (wallet.connected && ownedWrappers.length === 0 && shouldRefresh) {
+            console.log("connected or refresh to load more items");
             loadMoreItems();
         }
-    }, [wallet.connected, loadMoreItems, ownedWrappers.length]);
-
-    // wrapper 布局
-    const containerRef = useRef(null);
-
-    // @ts-ignore
-    const columnCount = Math.floor((containerRef.current?.offsetWidth || 1200) / 245);
-    const rowCount = Math.ceil(ownedWrappers.length / columnCount);
-
-    // @ts-ignore
-    const getColumnWidth = () => Math.floor((containerRef.current?.offsetWidth || 1200) / columnCount);
-    const getRowHeight = () => 245; // Adjust based on desired row height
+    }, [wallet.connected, loadMoreItems, ownedWrappers.length, shouldRefresh]);
 
 
-    console.log("columnCount:", columnCount, "rowCount:", rowCount)
-    console.log("containerWidth:", containerRef.current)
-    console.log("getColumnWidth:", getColumnWidth())
-    console.log("getRowHeight:", getRowHeight())
+    const filterWrappers = () => {
+        let filtered = ownedWrappers;
+        if (kind) {
+            filtered = filtered.filter((wrapper: any) => wrapper.data.display.data?.kind === kind);
+        }
+        if (alias) {
+            filtered = filtered.filter((wrapper: any) => wrapper.data.display.data?.alais && wrapper.data.display.data?.alais.includes(alias));
+        }
+        console.log("filterWrappers");
+        console.log(filtered);
+        setFilteredWrappers(filtered);
+    };
+
+    const handleSearch = () => {
+        console.log("search");
+        console.log(kind, alias);
+        filterWrappers();
+    };
 
     return (
         <div className="flex h-screen">
@@ -69,41 +102,29 @@ export default function Page() {
                 <ScrollArea className="w-1/4 bg-white p-4 space-y-6">
                     <OwnedObjects />
                 </ScrollArea>
-                <div className="w-3/4 p-8 flex flex-col h-screen" ref={containerRef}>
+                <div className="w-3/4 p-8 flex flex-col h-screen">
                     <div className="flex items-center space-x-4 mb-4">
-                        <Select>
-                            <SelectTrigger aria-label="NFT Type" id="nft-type">
-                                <SelectValue placeholder="NFT" />
+                        <Select onValueChange={(value: string) => setKind(value)}>
+                            <SelectTrigger aria-label="Wrapper Type">
+                                <SelectValue placeholder="Wrapper" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="type1">Type 1</SelectItem>
-                                <SelectItem value="type2">Type 2</SelectItem>
+                                {Array.from(kindSet as Set<string>).map(kind => (
+                                    <SelectItem key={kind} value={kind}>{kind}</SelectItem>
+                                ))}
                             </SelectContent>
                         </Select>
-                        <Input placeholder="input wrapper alias" />
-                        <Button variant="secondary">Search</Button>
+                        <Input
+                            placeholder="input wrapper alias"
+                            value={alias}
+                            onChange={(e: any) => setAlias(e.target.value)}
+                        />
+                        <Button variant="secondary" onClick={handleSearch}>Search</Button>
+
                     </div>
 
                     <div className="flex-1 overflow-auto">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                            <Grid
-                                columnCount={columnCount}
-                                columnWidth={getColumnWidth}
-                                height={600}
-                                // @ts-ignore
-                                width={containerRef.current?.offsetWidth || 1200}
-                                rowCount={rowCount}
-                                rowHeight={getRowHeight}
-                                itemData={{ items: ownedWrappers, columnCount}}
-                                onItemsRendered={({ visibleRowStopIndex }) => {
-                                    if (visibleRowStopIndex >= rowCount - 1 && cursor) {
-                                        loadMoreItems();
-                                    }
-                                }}
-                            >
-                                {Cell}
-                            </Grid>
-                        </div>
+                        <WrapperList items={filteredWrappers} />
                     </div>
                 </div>
             </DndProvider>
