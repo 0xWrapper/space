@@ -1,0 +1,8 @@
+{
+    "git": {
+      "deploymentEnabled": {
+        "testnet": false,
+        "main-net": false
+      }
+    }
+  }
