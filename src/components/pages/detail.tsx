@@ -4,16 +4,18 @@ import { Button } from "@/components/ui/button"
 import { AvatarImage, Avatar } from "@/components/ui/avatar"
 import { CardContent, Card } from "@/components/ui/card"
 import Image from "next/image"
-
 export default function Page() {
   return (
     <div className="flex flex-col items-center justify-center p-4 bg-white">
       <div className="flex flex-col md:flex-row w-full max-w-6xl mt-8">
         <section className="flex flex-col w-full md:w-1/2 space-y-4">
           <div className="text-lg">
-            <span className="font-bold">This SuiFren is a</span>
-            <Badge variant="secondary">CAPY</Badge>
-            <span>born on December 21, 2023 in Bermuda{"\n                  "}</span>
+            <span className="font-bold">This SuiFren is a
+              <sup className="text-xs align-super">
+                <Badge variant="secondary">CAPY</Badge>
+              </sup>
+            </span>
+            <span> born on December 21, 2023 in Bermuda{"\n                  "}</span>
           </div>
           <div className="text-muted-foreground">They reside in Kiosk 0x8e30...86c7.</div>
           <div className="border rounded-lg p-4">
