@@ -4,12 +4,12 @@ import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 const ServiceContent = () => {
     return (
         <>
-            <h2 className="text-xl font-semibold mb-2">Terms of Service</h2>
+            <h2 className="text-xl font-semibold mb-4">Terms of Service</h2>
             <p className="text-sm">
-                Welcome to Wrapper Protocol's website. By using our website and services, you agree to comply with the following terms and conditions. If you do not agree with these terms, please do not continue to use our website.
+                Welcome to Wrapper Protocol website. By using our website and services, you agree to comply with the following terms and conditions. If you do not agree with these terms, please do not continue to use our website.
             </p>
             <p className="text-sm">
-                1. You agree not to engage in any activity that could harm, disable, overload, or impair the website, or interfere with any other party's use and enjoyment of the website.
+                1. You agree not to engage in any activity that could harm, disable, overload, or impair the website, or interfere with any other party use and enjoyment of the website.
             </p>
             <p className="text-sm">
                 2. You agree not to access or attempt to access our website through any unauthorized means.
@@ -36,7 +36,7 @@ const ServiceContent = () => {
 const PrivacyContent = () => {
     return (
         <>
-            <h2 className="text-xl font-semibold mb-2">Privacy Policy</h2>
+            <h2 className="text-xl font-semibold mb-4">Privacy Policy</h2>
             <p className="text-sm">
                 At Wrapper Protocol, we respect your privacy and are committed to protecting your personal information.
             </p>

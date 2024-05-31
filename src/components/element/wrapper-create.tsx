@@ -1,11 +1,22 @@
 import { useDrop } from 'react-dnd';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
+import { LogoIcon } from '../layout/logo';
 
-export default function WrapperCard({ title, children, onDrop }: { title: string, children: React.ReactNode, onDrop: (item: any) => void }) {
+// dnd
+const handleDropNewWrapper = (item: any) => {
+    console.log("Creating new wrapper with:", item);
+    // 添加创建新的wrapper的逻辑
+};
+
+export default function WrapperCreate({
+    title,
+}: {
+    title: string,
+}) {
     const [{ isOver }, drop] = useDrop(() => ({
         accept: 'object',
-        drop: (item) => onDrop(item),
+        drop: (item) => handleDropNewWrapper(item),
         collect: (monitor) => ({
             isOver: monitor.isOver(),
         }),
@@ -14,11 +25,11 @@ export default function WrapperCard({ title, children, onDrop }: { title: string
     return (
         // @ts-ignore
         <Card ref={drop} className={`w-full bg-white ${isOver ? 'bg-gray-200' : ''}`}>
-            <CardHeader>
-                <CardTitle>{title}</CardTitle>
+            <CardHeader className="tracking-wide">
+                <CardTitle >{title}</CardTitle>
             </CardHeader>
             <CardContent>
-                {children}
+                <LogoIcon height={200} width={200} />
             </CardContent>
             <CardFooter className="flex justify-center">
                 <Button variant="secondary">Create</Button>
