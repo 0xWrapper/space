@@ -16,7 +16,7 @@ export default function WrapperCreate({ title }: { title: string }) {
         tx.moveCall({
             arguments: [],
             typeArguments: [],
-            target: `${PACKAGE_ID}::entry::empty`,
+            target: `${PACKAGE_ID}::wrapper::empty`,
         });
         try {
             console.log(tx)

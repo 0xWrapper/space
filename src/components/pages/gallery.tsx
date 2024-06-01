@@ -22,7 +22,7 @@ export default function Page() {
         setInterval(() => {
             console.log("refresh");
             setShouldRefresh((prev: boolean) => !prev); // 切换布尔变量
-        }, 5000);
+        }, 1000);
     }, []);
 
 
@@ -82,7 +82,7 @@ export default function Page() {
         if (kind) {
             filtered = filtered.filter((wrapper: any) => wrapper.data.display.data?.kind === kind);
         }
-        if (alias) {
+        if (alias && alias !=" ") {
             filtered = filtered.filter((wrapper: any) => wrapper.data.display.data?.alais && wrapper.data.display.data?.alais.includes(alias));
         }
         console.log("filterWrappers");
