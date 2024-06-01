@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card';
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '../ui/sheet';
-import { CopyIcon, ImageIcon, SplitIcon, SquarePenIcon } from 'lucide-react';
+import { CopyIcon, PackageOpen, SplitIcon, SquarePenIcon } from 'lucide-react';
 import { Input } from '../ui/input';
 import { fetchImageAsBase64, minType, shortenAddress } from '@/lib/utils';
 import { Button } from "@/components/ui/button"
@@ -14,6 +14,9 @@ import {
 import { useDrag, useDrop } from 'react-dnd';
 import { LogoIcon } from './logo';
 import Image from 'next/image';
+import { useWallet } from '@suiet/wallet-kit';
+import { TransactionBlock } from '@mysten/sui.js/transactions';
+import { PACKAGE_ID } from '@/config/network';
 
 
 type GalleryWrapperProps = {
@@ -31,15 +34,63 @@ const handleDropToWrapper = (item: any) => {
     }
 };
 
-export default function GalleryWrapper({
-    wrapperProps,
-}: {
-    wrapperProps: GalleryWrapperProps,
-}) {
+export default function GalleryWrapper({ wrapperProps }: { wrapperProps: GalleryWrapperProps }) {
+    const wallet = useWallet()
+
     const [imageBase64, setImageBase64] = useState('');
     const validId = shortenAddress(wrapperProps.id);
     const validAlias = wrapperProps.alias || "Wrapper";
     const validKind = minType(wrapperProps.kind);
+
+
+    const [aliasInput, setAliasInput] = useState('');
+
+    async function handleUnWrap() {
+        console.log("Unwrap wrapper:", wrapperProps.id);
+        const tx = new TransactionBlock();
+        tx.moveCall({
+            arguments: [
+                tx.object(wrapperProps.id)
+            ],
+            // typeArguments: [wrapperProps.kind],
+            target: `${PACKAGE_ID}::wrapper::destroy_empty`,
+        });
+        try {
+            // execute the programmable transaction
+            const resData = await wallet.signAndExecuteTransactionBlock({
+                // @ts-ignore
+                transactionBlock: tx,
+            })
+            console.log('unwrap successfully!', resData)
+        } catch (e) {
+            console.error('unwrap failed', e)
+        }
+    };
+
+    async function handleAliasSave() {
+        console.log("Set wrapper alias:", wrapperProps.id, wrapperProps.alias, aliasInput);
+        const tx = new TransactionBlock();
+
+        tx.moveCall({
+            arguments: [
+                tx.object(wrapperProps.id),
+                tx.pure(aliasInput),
+            ],
+            // typeArguments: [wrapperProps.kind],
+            target: `${PACKAGE_ID}::wrapper::set_alias`,
+        });
+
+        try {
+            // execute the programmable transaction
+            const resData = await wallet.signAndExecuteTransactionBlock({
+                // @ts-ignore
+                transactionBlock: tx,
+            })
+            console.log('set alias successfully!', resData)
+        } catch (e) {
+            console.error('set alias failed', e)
+        }
+    };
 
     const handleIdCopy = () => {
         navigator.clipboard.writeText(wrapperProps.id).then(() => {
@@ -136,10 +187,14 @@ export default function GalleryWrapper({
                             <SheetTitle>Set Alias</SheetTitle>
                         </SheetHeader>
                         <div>
-                            <Input placeholder="Enter alias" />
+                            <Input
+                                placeholder="Enter alias"
+                                value={aliasInput}
+                                onChange={(e: any) => setAliasInput(e.target.value)}
+                            />
                         </div>
                         <SheetFooter>
-                            <Button>Save</Button>
+                            <Button onClick={handleAliasSave}>Save</Button>
                         </SheetFooter>
                     </SheetContent>
                 </Sheet>
@@ -163,11 +218,14 @@ export default function GalleryWrapper({
                         </SheetFooter>
                     </SheetContent>
                 </Sheet>
-
                 <Button variant="secondary">
+                    <PackageOpen className="h-4 w-4" onClick={handleUnWrap} />
+                </Button>
+
+                {/* <Button variant="secondary">
                     <ImageIcon className="h-4 w-4" />
                     <input accept="image/*" className="hidden" type="file" />
-                </Button>
+                </Button> */}
             </CardFooter>
         </Card>
     );

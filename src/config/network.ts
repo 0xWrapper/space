@@ -2,4 +2,4 @@
 export const NETWORK = 'testnet'
 
 
-export const PACKAGE_ID = '0x5bad0e68cd4d4a459cf5c4693536ea9d041ba9d8f1844001dcd1334e9a06659f'
+export const PACKAGE_ID = '0x9250d3529e1b5cc7aa81cd3bf9cb8ad3a102f1e1f7a45aead45f912a474c2730'

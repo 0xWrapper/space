@@ -4,6 +4,7 @@ import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
 import { TwitterLink, SiteLogoLink, GithubLink } from "@/components/layout/site-links"
 import { MenuIcon } from "@/components/layout/logo"
 import WalletDialog from "./wallet-diago";
+import { Badge } from "../ui/badge"
 
 const NavLink = ({ href, children, ...props }: { href: string, children: React.ReactNode }) => {
   return (
@@ -35,11 +36,28 @@ const MobileMenu = () => {
       </SheetTrigger>
       <SheetContent side="left">
         <div className="grid gap-2 py-6">
-          <SheetLink href="/">Home</SheetLink>
-          <SheetLink href="/gallery">Gallery</SheetLink>
-          <SheetLink href="/mystery">Mystery</SheetLink>
-          <SheetLink href="/market">Market</SheetLink>
-          <SheetLink href="/tokenized">Tokenized</SheetLink>
+          <SheetLink href="/">Home
+            <sup className="text-xs align-super">
+              <Badge variant="secondary">working</Badge>
+            </sup>
+          </SheetLink>
+          <SheetLink href="/gallery">Gallery
+          </SheetLink>
+          <SheetLink href="/mystery">Mystery
+            <sup className="text-xs align-super">
+              <Badge variant="secondary">working</Badge>
+            </sup>
+          </SheetLink>
+          <SheetLink href="/market">Market
+            <sup className="text-xs align-super">
+              <Badge variant="secondary">working</Badge>
+            </sup>
+          </SheetLink>
+          <SheetLink href="/tokenized">Tokenized
+            <sup className="text-xs align-super">
+              <Badge variant="secondary">working</Badge>
+            </sup>
+          </SheetLink>
         </div>
       </SheetContent>
     </Sheet>
@@ -52,12 +70,32 @@ export default function Navbar() {
       <div className="flex items-center justify-between">
         <SiteLogoLink className="flex items-center gap-2" />
         <nav className="hidden md:flex md:gap-4">
-          <NavLink href="/">Home</NavLink>
+          <NavLink href="/">Home
+            <sup className="text-xs align-super">
+              <Badge variant="secondary">working</Badge>
+            </sup>
+          </NavLink>
           <NavLink href="/gallery">Gallery</NavLink>
-          <NavLink href="/mystery">Mystery</NavLink>
-          <NavLink href="/market">Market</NavLink>
-          <NavLink href="/detail">Detail</NavLink>
-          <NavLink href="/tokenized">Tokenized</NavLink>
+          <NavLink href="/mystery">Mystery
+            <sup className="text-xs align-super">
+              <Badge variant="secondary">working</Badge>
+            </sup>
+          </NavLink>
+          <NavLink href="/market">Market
+            <sup className="text-xs align-super">
+              <Badge variant="secondary">working</Badge>
+            </sup>
+          </NavLink>
+          <NavLink href="/detail">Detail
+            <sup className="text-xs align-super">
+              <Badge variant="secondary">working</Badge>
+            </sup>
+          </NavLink>
+          <NavLink href="/tokenized">Tokenized
+            <sup className="text-xs align-super">
+              <Badge variant="secondary">working</Badge>
+            </sup>
+          </NavLink>
           <TwitterLink />
           <GithubLink />
           {/* <ModeToggle /> */}
