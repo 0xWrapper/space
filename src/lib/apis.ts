@@ -1,8 +1,8 @@
-import { NETWORK } from '@/config/network'
-import { getFullnodeUrl, SuiClient, SuiObjectDataFilter } from '@mysten/sui.js/client'
+import { NETWORK, PACKAGE_ID } from '@/config/network'
+import { getFullnodeUrl, SuiClient, SuiEvent, SuiObjectDataFilter } from '@mysten/sui.js/client'
 import next from 'next'
 
-const client = new SuiClient({ url: getFullnodeUrl(NETWORK) })
+export const client = new SuiClient({ url: getFullnodeUrl(NETWORK) })
 
 
 
@@ -200,3 +200,93 @@ export const getOwnedObjects = async ({
 //     }
 //     return coins
 // }
+
+
+
+export interface GetObjectParams {
+    id: string;
+    /**
+     * Whether to show the content(i.e., package content or Move struct content) of the object. Default to
+     * be False
+     */
+    showContent?: boolean;
+    /** Whether to show the Display metadata of the object for frontend rendering. Default to be False */
+    showDisplay?: boolean;
+    /** Whether to show the owner of the object. Default to be False */
+    showOwner?: boolean;
+    /** Whether to show the previous transaction digest of the object. Default to be False */
+    showPreviousTransaction?: boolean;
+    /** Whether to show the storage rebate of the object. Default to be False */
+    showStorageRebate?: boolean;
+    /** Whether to show the type of the object. Default to be False */
+    showType?: boolean;
+}
+
+export const getObjectDetail = async ({
+    id,
+    showType = false,
+    showContent = false,
+    showDisplay = false,
+    showOwner = false,
+    showPreviousTransaction = false,
+    showStorageRebate = false
+}: GetObjectParams) => {
+    try {
+        let result = await client.getObject({
+            id,
+            options: {
+                showContent,
+                showDisplay,
+                showOwner,
+                showPreviousTransaction,
+                showStorageRebate,
+                showType,
+            },
+        });
+        if (result && result.data) {
+            return result.data;
+        } else {
+            throw new Error("Invalid response structure");
+        }
+    } catch (error) {
+        console.error("Error fetching object detail:", error);
+        throw error;
+    }
+};
+
+export const getPackageInitEvent = async () => {
+    try {
+        let result = await client.queryEvents({
+            query: {
+                MoveEventType: `${PACKAGE_ID}::wrapper::Init`
+            }
+        });
+        if (result && result.data) {
+            return (result.data[0].parsedJson as any).inception;
+        } else {
+            throw new Error("Invalid response structure");
+        }
+    } catch (error) {
+        console.error("Error fetching package init event:", error);
+        throw error;
+    }
+}
+
+
+export const getPackageWrapEvent = async () => {
+    try {
+        let result = await client.queryEvents({
+            query: {
+                MoveEventType: `${PACKAGE_ID}::wrapper::Wrap`
+            }
+        });
+        if (result && result.data) {
+            return (result.data[0].parsedJson as any).inception;
+        } else {
+            throw new Error("Invalid response structure");
+        }
+    } catch (error) {
+        console.error("Error fetching package init event:", error);
+        throw error;
+    }
+}
