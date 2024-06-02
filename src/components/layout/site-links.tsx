@@ -26,7 +26,7 @@ export function SiteLogoLink({ ...props }) {
     return (
         <Link  {...props} href={siteConfig.links.github}>
             <LogoIcon className="h-6 w-6" />
-            <span className="font-semibold text-lg">Wrapper Protocal</span>
+            <span className="font-semibold text-lg">Wrapper Protocol</span>
         </Link>
     )
 }
