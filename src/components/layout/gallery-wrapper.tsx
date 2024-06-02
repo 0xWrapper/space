@@ -17,6 +17,7 @@ import Image from 'next/image';
 import { useWallet } from '@suiet/wallet-kit';
 import { TransactionBlock } from '@mysten/sui.js/transactions';
 import { PACKAGE_ID } from '@/config/network';
+import CopyAddress from './copy-address';
 
 
 type GalleryWrapperProps = {
@@ -38,7 +39,6 @@ export default function GalleryWrapper({ wrapperProps }: { wrapperProps: Gallery
     const wallet = useWallet()
 
     const [imageBase64, setImageBase64] = useState('');
-    const validId = shortenAddress(wrapperProps.id);
     const validAlias = wrapperProps.alias || "Wrapper";
     const validKind = minType(wrapperProps.kind);
 
@@ -92,14 +92,6 @@ export default function GalleryWrapper({ wrapperProps }: { wrapperProps: Gallery
         }
     };
 
-    const handleIdCopy = () => {
-        navigator.clipboard.writeText(wrapperProps.id).then(() => {
-            console.log('Wrapper Id copied to clipboard');
-        }).catch(err => {
-            console.error('Failed to copy text: ', err);
-        });
-    };
-
     useEffect(() => {
         const loadImage = async () => {
             const base64 = await fetchImageAsBase64(wrapperProps.image_url);
@@ -130,7 +122,7 @@ export default function GalleryWrapper({ wrapperProps }: { wrapperProps: Gallery
         // @ts-ignore
         <Card ref={drop} className={`w-full bg-white ${isOver ? 'bg-gray-200' : ''}`}>
             <CardHeader>
-                <CardTitle>{wrapperProps.alias ? wrapperProps.alias : validId}</CardTitle>
+                <CardTitle>{wrapperProps.alias ? wrapperProps.alias : shortenAddress(wrapperProps.id)}</CardTitle>
             </CardHeader>
             <CardContent>
                 <HoverCard>
@@ -160,13 +152,7 @@ export default function GalleryWrapper({ wrapperProps }: { wrapperProps: Gallery
                                 <p className="text-sm">
                                     {validKind}
                                 </p>
-                                <div className="flex items-center pt-2">
-                                    <span className="text-xs text-muted-foreground">
-                                        {validId}
-                                    </span>
-                                    {" "}
-                                    <CopyIcon className="mr-2 h-4 w-4 opacity-70" onClick={handleIdCopy} />
-                                </div>
+                                <CopyAddress address={wrapperProps.id} />
                             </div>
                         </div>
                     </HoverCardContent>
