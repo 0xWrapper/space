@@ -5,7 +5,13 @@ import {
     SuiDevnetChain,
     SuiTestnetChain,
     SuiMainnetChain,
-    DefaultChains,
+    SuietWallet,
+    SuiWallet,
+    EthosWallet,
+    MorphisWallet,
+    OneKeyWallet,
+    SurfWallet,
+    TokenPocketWallet,
 } from "@suiet/wallet-kit";
 import '@suiet/wallet-kit/style.css';
 
@@ -18,8 +24,19 @@ const SupportedChains: Chain[] = [
 
 export default function Providers({ children }: { children: React.ReactNode }): JSX.Element {
     return (
-        <WalletProvider chains={SupportedChains}>
+        <WalletProvider
+            chains={SupportedChains}
+            defaultWallets={[
+                MorphisWallet,
+                SuiWallet,
+                SurfWallet,
+                SuietWallet,
+                EthosWallet,
+                TokenPocketWallet,
+                OneKeyWallet,
+            ]}>
             {children}
         </WalletProvider>
     );
 };
+
