@@ -27,6 +27,15 @@ export const metadata: Metadata = {
   },
 }
 
+const menuItems = [
+  { label: "Home", href: "/", badge: "working" },
+  { label: "Gallery", href: "/gallery", badge: "working" },
+  { label: "Mystery", href: "/mystery", badge: "working" },
+  { label: "Market", href: "/market", badge: "working" },
+  { label: "Detail", href: "/detail", badge: "working" },
+  { label: "Tokenized", href: "/tokenized", badge: "working" }
+];
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -48,7 +57,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Providers>
-            <Navbar />
+            <Navbar menuItems={menuItems} />
             <main>
               {children}
             </main>
