@@ -2,7 +2,7 @@ import { Progress } from "@/components/ui/progress"
 import InceptionWrapperCard from "../element/inception-wrapper";
 export default function Page() {
     return (
-        <div className="bg-gradient-to-r from-purple-100 via-pink-200 to-red-200 flex items-center justify-center">
+        <div className="flex flex-col min-h-screen bg-gradient-to-r from-purple-100 via-pink-200 to-red-200 items-center justify-center">
             <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
                 <div className="mb-10">
                     <h1 className="text-3xl font-bold text-gray-900 mb-4">✨Launch Event✨: Wrap Your Wrapper & Earn Token Rewards</h1>
